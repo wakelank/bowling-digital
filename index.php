@@ -12,15 +12,15 @@
 
   //$frame_row = new frame_row(10);
 
-  $app->get('/hello/:name', function($name){
-    echo "Hello, $name";
-  });
+  // $app->get('/hello/:name', function($name){
+  //   echo "Hello, $name";
+  // });
 
   $app->get('/', function() use ($app) {
     $app->render('scoresheet.php');
   });
 
-  $app->put('/framerow', function() use ($app) {
+  $app->put('/', function() use ($app) {
     $new_roll_score = $app->request->put('new_roll_score');
     // $roll = $app->request->put('roll');
     // $frame_row->set_roll_score($roll, $roll_score);
@@ -33,7 +33,19 @@
     array_push($roll_scores, $new_roll_score);
     $_SESSION['roll_scores'] = $roll_scores;
     $app->redirect('/');
+  });
 
+  // Can't get this to work
+  // $app->delete('/', function() use ($app) {
+  //   $roll_scores = array();
+  //   $_SESSION['roll_scores'] = $roll_scores;
+  //   $app->redirect('/');
+  // });
+
+  $app->post('/delete', function() use ($app) {
+    $roll_scores = array();
+    $_SESSION['roll_scores'] = $roll_scores;
+    $app->redirect('/');
   });
 
   $app->run();
