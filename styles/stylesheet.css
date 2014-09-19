@@ -3,3 +3,26 @@ body {
   color:purple;
   font-family: sans-serif;
 }
+.score_table {
+  border: thin black solid;
+  padding: 0;
+}
+td {
+  margin: 0;
+  padding: 0;
+}
+tr {
+  margin: 0;
+  padding: 0;
+}
+tbody {
+  margin: 0;
+  padding: 0;
+}
+table {
+  margin: 0;
+  padding: 0;
+}
+.frame_table td {
+  border: thin black solid;
+}

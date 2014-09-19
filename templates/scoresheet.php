@@ -29,21 +29,29 @@
 
     $roll_scores = $_SESSION['roll_scores'];
     $frame_row = new frame_row($num_frames, $roll_scores);
+    $num_frames = $frame_row->get_num_frames();
+    echo "frames: " . $num_frames. "<br>";
+    echo "score: ";
+    print_r($frame_row->get_frame_scores($num_frames-1));
+    echo "<br>";
 
+    echo "<table class='score_table'>";
+    echo "<tr>";
 
-    // $count = 0;
-    // foreach($roll_scores as $roll_score){
-    //   echo "adding: " . $count . ":" .$roll_score . "<br>";
-    //   $frame_row->set_roll_score($count, $roll_score);
-    //   ++$count;
-    // }
-    // echo "frame: " . $frame_row->get_num_frames() . "<br>";
-    //
-    //
-    // $count = 0;
-    // foreach($roll_scores as $roll_score){
-    //   echo "roll " . $count . ": " . $frame_row->get_roll_score($count) . "<br>";
-    //   ++$count;
-    // }
+    for($i = 0; $i <= $num_frames-1; ++$i){
+      $frame_scores = $frame_row->get_frame_scores($i);
+      echo "<td>";
+      echo "<table class='frame_table'>";
+      echo "<tr>";
+      echo "<td>" . $frame_scores['roll1'] . "</td>";
+      echo "<td>" . $frame_scores['roll2'] . "</td>";
+      echo "</tr><tr>";
+      echo "<td colspan=2>" . $frame_scores['frame_score'] . "</td>";
+      echo "</tr></table>";
+      echo "</td>";
+    }
+
+    echo "</tr>";
+    echo "</table>";
 
   ?>

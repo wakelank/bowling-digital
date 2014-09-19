@@ -11,6 +11,7 @@
     function __construct($num_frames, $new_roll_scores){
       $this->num_rolls = ($num_frames * 2) + 1;
       // $this->roll_scores = array_fill(0, $this->num_rolls + 2, 0);
+
       for ($i = 0; $i <= $this->num_rolls + 2; ++$i){
         if (isset($new_roll_scores[$i])){
           $this->roll_scores[$i] = $new_roll_scores[$i];
@@ -25,13 +26,13 @@
 
     }
 
-
-    function get_roll_score($roll){
-      // global $roll_scores;
-      $roll_scores = $this->roll_scores;
-
-      return $roll_scores[$roll];
-    }
+    //
+    // function get_roll_score($roll){
+    //   // global $roll_scores;
+    //   $roll_scores = $this->roll_scores;
+    //
+    //   return $roll_scores[$roll];
+    // }
 
     // function set_roll_score($roll, $score){
     //   // global $roll_scores;
@@ -57,7 +58,6 @@
         $frames[$frame_index]['roll' . $roll] = $roll_score;
         if ($roll_score == 'X' || $roll_score == '/'){
           $roll_score = 10;
-          echo "roll_score ". $roll_scores[$i] . "<br>";
           $frame_score += $roll_scores[$i+1];        // spare or strike, the next roll is added
           if ($roll = 1){                            // if it's a strike, the roll after that is added
             $frame_score += $roll_scores[$i+2];
@@ -93,7 +93,7 @@
     function get_frame_scores($frame_index){
       global $frames;
 
-      return $frame[$frame_index];
+      return $frames[$frame_index];
     }
 
 
