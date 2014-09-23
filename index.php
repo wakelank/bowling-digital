@@ -31,6 +31,9 @@
     // $app->render('scoresheet.php', array('score' => $score, 'roll' => $roll, 'scores' => $scores ));
     $roll_scores = $_SESSION['roll_scores'];
     array_push($roll_scores, $new_roll_score);
+    if ((string)$new_roll_score == "X"){
+      array_push($roll_scores, "-");
+    }
     $_SESSION['roll_scores'] = $roll_scores;
     $app->redirect('/');
   });
