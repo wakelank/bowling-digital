@@ -26,8 +26,9 @@
 
     $num_frames = 10;
 
+    $roll_scores = isset($_SESSION['roll_scores']) ? $_SESSION['roll_scores'] : null;
+    //TODO error message if roll_scores is empty
 
-    $roll_scores = $_SESSION['roll_scores'];
     $frame_row = new frame_row($num_frames, $roll_scores);
     // $num_frames_rolled = $frame_row->get_num_frames();
 
@@ -44,7 +45,7 @@
         echo "<td>" . $roll . "</td>";
       }
       echo "</tr><tr>";
-      echo "<td colspan=2>" . $frame['total_frame_score'] . "</td>";
+      echo "<td colspan=2>" . $frame['frame_score'] . "</td>";
       echo "</tr></table>";
       echo "</td>";
     }
