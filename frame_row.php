@@ -19,8 +19,18 @@
       $max_rolls_per_frame = 2;
       $frames = array();
 
-      for ($frame_index = 1; $frame_index <= $num_frames; ++$frame_index){
+      for ($frame_index = 0; $frame_index < $num_frames; ++$frame_index){
         $current_frame = array('rolls' => array(), 'frame_score' => null);
+        $previous_frame = isset($frames[$frame_index - 1]) ? $frames[$frame_index - 1] : array('frame_score' => null);
+
+        // echo "frame index: " . $frame_index . "<br>";
+        // echo "previous_frame: <br>";
+        // if (isset($frames[$frame_index -1])){
+        //   print_r($frames[$frame_index -1]);
+        // }
+        // echo"<br><br>";
+
+
 
         for($frame_roll_index = 1; $frame_roll_index <= $max_rolls_per_frame; ++ $frame_roll_index){
 
@@ -28,6 +38,9 @@
             $current_roll = $roll_scores[$roll_score_index];
             $current_frame['rolls'][$frame_roll_index] = $current_roll;
             $current_frame['frame_score'] += $current_roll;
+            if($frame_roll_index == $max_rolls_per_frame){
+              $current_frame['frame_score'] += $previous_frame['frame_score'];
+            }
 
           }else{
             $current_frame['rolls'][$frame_roll_index] = '';
@@ -37,6 +50,9 @@
           ++$roll_score_index;
 
         }
+
+
+
         array_push($frames, $current_frame);
 
       }
