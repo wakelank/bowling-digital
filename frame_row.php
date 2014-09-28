@@ -42,6 +42,7 @@
           if ($roll_after_next == 'X'){ $roll_after_next = 10; }
           elseif ($roll_after_next == '/'){ $roll_after_next = 10 - $next_roll; }
 
+
           // echo "frame: " . $frame_index . "<br>";
           // echo "current roll :" .$current_roll . "<br>";
           // print_r($frames);
@@ -55,6 +56,7 @@
 
             if ($current_roll == 'X'){
               //TODO error if strike is on second roll of frame
+
               $current_frame['rolls'][$frame_roll_index] = $current_roll;
               $current_frame['rolls'][$frame_roll_index + 1 ] = '-';
               $current_frame['frame_score'] = 10;
@@ -63,8 +65,7 @@
               if (!is_null($next_roll) && !is_null($roll_after_next)){
                 $current_frame['frame_score'] += $next_roll;
                 $current_frame['frame_score'] += $roll_after_next;
-              }
-              else{
+              }else{
                 $current_frame['frame_score'] = '-';
               }
 
@@ -73,6 +74,16 @@
 
             }elseif ($current_roll == '/'){
               //TODO error if spare is on first roll of frame
+
+              $current_frame['rolls'][$frame_roll_index] = $current_roll;
+              $current_frame['frame_score'] = 10;
+              $current_frame['frame_score'] += $previous_frame['frame_score'];
+
+              if(!is_null($next_roll)){
+                $current_frame['frame_score'] += $next_roll;
+              }else{
+                $current_frame['frame_score'] = '';
+              }
 
             }else{
 
