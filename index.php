@@ -18,9 +18,9 @@
     $new_roll_score = $app->request->put('new_roll_score');
     $roll_scores = $_SESSION['roll_scores'];
     array_push($roll_scores, $new_roll_score);
-    if ((string)$new_roll_score == "X"){
-      array_push($roll_scores, "-");
-    }
+    // if ((string)$new_roll_score == "X"){
+    //   array_push($roll_scores, "-");
+    // }
     $_SESSION['roll_scores'] = $roll_scores;
     $app->redirect('/');
   });

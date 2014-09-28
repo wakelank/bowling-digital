@@ -32,14 +32,55 @@
 
 
 
-        for($frame_roll_index = 1; $frame_roll_index <= $max_rolls_per_frame; ++ $frame_roll_index){
+        for($frame_roll_index = 0; $frame_roll_index < $max_rolls_per_frame; ++ $frame_roll_index){
 
-          if (isset($roll_scores[$roll_score_index])){
-            $current_roll = $roll_scores[$roll_score_index];
-            $current_frame['rolls'][$frame_roll_index] = $current_roll;
-            $current_frame['frame_score'] += $current_roll;
-            if($frame_roll_index == $max_rolls_per_frame){
+          $current_roll = isset($roll_scores[$roll_score_index]) ? $roll_scores[$roll_score_index] : null;
+          $next_roll = isset($roll_scores[$roll_score_index + 1]) ? $roll_scores[$roll_score_index + 1] : null;
+          if ($next_roll == 'X'){ $next_roll = 10; }
+          elseif ($next_roll == '/'){ $next_roll = 10 - $current_roll; }
+          $roll_after_next = isset($roll_scores[$roll_score_index + 2]) ? $roll_scores[$roll_score_index + 2] : null;
+          if ($roll_after_next == 'X'){ $roll_after_next = 10; }
+          elseif ($roll_after_next == '/'){ $roll_after_next = 10 - $next_roll; }
+
+          // echo "frame: " . $frame_index . "<br>";
+          // echo "current roll :" .$current_roll . "<br>";
+          // print_r($frames);
+          // echo "<br>";
+
+          // echo "roll scores: <br>";
+          // print_r($roll_scores);
+          // echo "<br>";
+
+          if (!is_null($current_roll)){
+
+            if ($current_roll == 'X'){
+              //TODO error if strike is on second roll of frame
+              $current_frame['rolls'][$frame_roll_index] = $current_roll;
+              $current_frame['rolls'][$frame_roll_index + 1 ] = '-';
+              $current_frame['frame_score'] = 10;
               $current_frame['frame_score'] += $previous_frame['frame_score'];
+
+              if (!is_null($next_roll) && !is_null($roll_after_next)){
+                $current_frame['frame_score'] += $next_roll;
+                $current_frame['frame_score'] += $roll_after_next;
+              }
+              else{
+                $current_frame['frame_score'] = '-';
+              }
+
+              ++$roll_score_index;
+              break 1;
+
+            }elseif ($current_roll == '/'){
+              //TODO error if spare is on first roll of frame
+
+            }else{
+
+              $current_frame['rolls'][$frame_roll_index] = $current_roll;
+              $current_frame['frame_score'] += $current_roll;
+              if($frame_roll_index + 1 == $max_rolls_per_frame){
+                $current_frame['frame_score'] += $previous_frame['frame_score'];
+              }
             }
 
           }else{
@@ -48,10 +89,7 @@
 
           }
           ++$roll_score_index;
-
         }
-
-
 
         array_push($frames, $current_frame);
 
@@ -64,18 +102,18 @@
 
       return $frames;
     }
-
-    function get_num_frames(){
-      $frames = $this->frames;;
-
-      return count($frames);
-    }
-
-    function get_frame_scores($frame_index){
-      $frames = $this->frames;;
-
-      return $frames[$frame_index];
-    }
+    //
+    // function get_num_frames(){
+    //   $frames = $this->frames;;
+    //
+    //   return count($frames);
+    // }
+    //
+    // function get_frame_scores($frame_index){
+    //   $frames = $this->frames;;
+    //
+    //   return $frames[$frame_index];
+    // }
 
     function game_over_check($roll_scores){
       $game_over = false;
