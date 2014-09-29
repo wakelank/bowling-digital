@@ -12,7 +12,7 @@
   <h1>Bowling Digital</h1>
   <form action="/" method="POST">
     <input type="hidden" name="_METHOD" value="PUT">
-    <input type="text" name="new_roll_score" maxlength="1">
+    <input type="text" name="new_roll_score" maxlength="1" value="0">
     <input type="submit">
   </form>
 

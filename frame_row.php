@@ -53,6 +53,8 @@
             $roll_after_next = 10 - $next_roll;
           }
 
+          $first_roll_of_frame = isset($current_frame['rolls'][0]) ? $current_frame['rolls'][0] : null;
+
           if ($frame_roll_index + 1 == $max_rolls_per_frame){
             $last_roll_in_frame = true;
           }else{
@@ -62,7 +64,17 @@
           if (!is_null($current_roll)){
 
             if ($current_roll == 'X'){
-              //TODO error if strike is on second roll of frame
+
+              if (!$last_frame && $frame_roll_index != 0){
+                echo "Cannot input a strike on second roll, unless it's on the last frame.<br>";
+                die();
+              }
+              if ($last_frame && $frame_roll_index != 0){
+                if (!($previous_roll == 'X' || $previous_roll == '/')){
+                  echo "Can only input a strike in the second or third roll in the last frame if the first roll was a strike or second roll was a spare.<br>";
+                  die();
+                }
+              }
 
               $current_frame['rolls'][$frame_roll_index] = $current_roll;
               $current_frame['frame_score'] += 10;
@@ -87,7 +99,15 @@
                 break 1;
               }
             }elseif ($current_roll == '/'){
-              //TODO error if spare is on first roll of frame
+
+              if($frame_roll_index == 0){
+                echo "cannot input a spare on the first roll of a frame.<br>";
+                die();
+              }
+              if($previous_roll == '/' || $previous_roll == 'X'){
+                echo "Cannot input a spare after a spare or strike in the same frame. <br>";
+                die();
+              }
 
               $current_frame['rolls'][$frame_roll_index] = $current_roll;
               $current_frame['frame_score'] = 10;
