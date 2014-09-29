@@ -87,10 +87,12 @@
                 if (!is_null($next_roll) && !is_null($roll_after_next)){
                   $current_frame['frame_score'] += $next_roll;
                   $current_frame['frame_score'] += $roll_after_next;
+
+                  $current_frame['frame_score'] += $previous_frame['frame_score'];
+
                 }else{
-                  $current_frame['frame_score'] = '-';
+                  $current_frame['frame_score'] = '';
                 }
-                $current_frame['frame_score'] += $previous_frame['frame_score'];
                 ++$roll_score_index;
                 $current_frame['rolls'][$frame_roll_index + 1 ] = '-';
                 break 1;
@@ -108,11 +110,12 @@
 
                 if(!is_null($next_roll)){
                   $current_frame['frame_score'] += $next_roll;
+                  $current_frame['frame_score'] += $previous_frame['frame_score'];
+
                 }else{
                   $current_frame['frame_score'] = '';
                 }
-                
-                $current_frame['frame_score'] += $previous_frame['frame_score'];
+
               }
 
             }else{
