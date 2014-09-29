@@ -17,10 +17,12 @@
   $app->put('/', function() use ($app) {
     $new_roll_score = $app->request->put('new_roll_score');
     $roll_scores = $_SESSION['roll_scores'];
-    array_push($roll_scores, $new_roll_score);
-    // if ((string)$new_roll_score == "X"){
-    //   array_push($roll_scores, "-");
-    // }
+    if(is_valid_roll($new_roll_score)){
+      array_push($roll_scores, $new_roll_score);
+    }else{
+      $app->flash('error','invalid roll');
+    }
+
     $_SESSION['roll_scores'] = $roll_scores;
     $app->redirect('/');
   });
@@ -37,6 +39,20 @@
     $_SESSION['roll_scores'] = $roll_scores;
     $app->redirect('/');
   });
+
+  function is_valid_roll($roll){
+    $validity = false;
+
+    if($roll == 'X'){
+      $validity = true;
+    }elseif ($roll == '/'){
+      $validity = true;
+    }elseif($roll >= 0 && $roll <= 9){
+      $validity = true;
+    }
+
+    return $validity;
+  }
 
   $app->run();
 

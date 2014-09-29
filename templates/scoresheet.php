@@ -27,10 +27,13 @@
     $num_frames = 10;
 
     $roll_scores = isset($_SESSION['roll_scores']) ? $_SESSION['roll_scores'] : null;
-    //TODO error message if roll_scores is empty
+    // error message if rollscores is empty
+
+    if(isset($flash['error'])){
+      echo $flash['error'];
+    }
 
     $frame_row = new frame_row($num_frames, $roll_scores);
-    // $num_frames_rolled = $frame_row->get_num_frames();
 
     $frames = $frame_row->get_frames();
 
