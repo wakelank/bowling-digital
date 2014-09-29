@@ -42,7 +42,7 @@
 
           $previous_roll = isset($roll_scores[$roll_score_index - 1]) ? $roll_scores[$roll_score_index -1] : null;
           $current_roll_symbol = isset($roll_scores[$roll_score_index]) ? $roll_scores[$roll_score_index] : null;
-          if ($current_roll_symbol == 'X'){ $current_roll = 10; echo "it's ten.<br>";}
+          if ($current_roll_symbol == 'X') { $current_roll = 10; }
           elseif ($current_roll_symbol == '/'){ $current_roll = 10 - $previous_roll; }
           else { $current_roll = $current_roll_symbol; }
           $next_roll = isset($roll_scores[$roll_score_index + 1]) ? $roll_scores[$roll_score_index + 1] : null;
@@ -76,7 +76,6 @@
               //TODO error if strike is on second roll of frame
 
               $current_frame['rolls'][$frame_roll_index] = $current_roll_symbol;
-
               $current_frame['frame_score'] += 10;
 
               if ($last_frame){
@@ -102,19 +101,24 @@
 
               $current_frame['rolls'][$frame_roll_index] = $current_roll_symbol;
               $current_frame['frame_score'] = 10;
-              $current_frame['frame_score'] += $previous_frame['frame_score'];
 
-              if(!is_null($next_roll)){
-                $current_frame['frame_score'] += $next_roll;
+              if ($last_frame){
+                $max_rolls_per_frame = 3;
               }else{
-                $current_frame['frame_score'] = '';
+
+                if(!is_null($next_roll)){
+                  $current_frame['frame_score'] += $next_roll;
+                }else{
+                  $current_frame['frame_score'] = '';
+                }
+                
+                $current_frame['frame_score'] += $previous_frame['frame_score'];
               }
 
             }else{
 
               $current_frame['rolls'][$frame_roll_index] = $current_roll_symbol;
               $current_frame['frame_score'] += $current_roll;
-              echo "current roll: " . $current_roll . "<br>";
               if($last_roll_in_frame){
                 $current_frame['frame_score'] += $previous_frame['frame_score'];
               }
