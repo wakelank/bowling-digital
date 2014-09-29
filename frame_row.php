@@ -23,6 +23,12 @@
         $current_frame = array('rolls' => array(), 'frame_score' => null);
         $previous_frame = isset($frames[$frame_index - 1]) ? $frames[$frame_index - 1] : array('frame_score' => null);
 
+        if($frame_index + 1 == $num_frames){
+          $last_frame = true;
+        }else{
+          $last_frame = false;
+        }
+
         // echo "frame index: " . $frame_index . "<br>";
         // echo "previous_frame: <br>";
         // if (isset($frames[$frame_index -1])){
@@ -43,6 +49,8 @@
           elseif ($roll_after_next == '/'){ $roll_after_next = 10 - $next_roll; }
 
 
+
+
           // echo "frame: " . $frame_index . "<br>";
           // echo "current roll :" .$current_roll . "<br>";
           // print_r($frames);
@@ -58,19 +66,24 @@
               //TODO error if strike is on second roll of frame
 
               $current_frame['rolls'][$frame_roll_index] = $current_roll;
-              $current_frame['rolls'][$frame_roll_index + 1 ] = '-';
+
               $current_frame['frame_score'] = 10;
               $current_frame['frame_score'] += $previous_frame['frame_score'];
 
-              if (!is_null($next_roll) && !is_null($roll_after_next)){
-                $current_frame['frame_score'] += $next_roll;
-                $current_frame['frame_score'] += $roll_after_next;
+              if ($last_frame){
+                $max_rolls_per_frame = 3;
               }else{
-                $current_frame['frame_score'] = '-';
-              }
+                if (!is_null($next_roll) && !is_null($roll_after_next)){
+                  $current_frame['frame_score'] += $next_roll;
+                  $current_frame['frame_score'] += $roll_after_next;
+                }else{
+                  $current_frame['frame_score'] = '-';
+                }
 
-              ++$roll_score_index;
-              break 1;
+                ++$roll_score_index;
+                $current_frame['rolls'][$frame_roll_index + 1 ] = '-';
+                break 1;
+              }
 
             }elseif ($current_roll == '/'){
               //TODO error if spare is on first roll of frame
@@ -103,6 +116,8 @@
         }
 
         array_push($frames, $current_frame);
+        // print_r($frames);
+        // echo"<br><br>";
 
       }
     }
