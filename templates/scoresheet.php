@@ -7,10 +7,12 @@
   <link rel="stylesheet" href="styles/stylesheet.css">
 </head>
 <body>
+
+  <!-- <?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> -->
   <h1>Bowling Digital</h1>
   <form action="/" method="POST">
     <input type="hidden" name="_METHOD" value="PUT">
-    <input type="text" name="new_roll_score" value="0">
+    <input type="text" name="new_roll_score" maxlength="1">
     <input type="submit">
   </form>
 
@@ -27,7 +29,10 @@
     $num_frames = 10;
 
     $roll_scores = isset($_SESSION['roll_scores']) ? $_SESSION['roll_scores'] : null;
-    // error message if rollscores is empty
+    if(is_null($roll_scores)){
+      echo "No scores to display.<br>";
+      die();
+    }
 
     if(isset($flash['error'])){
       echo $flash['error'];

@@ -15,12 +15,12 @@
   });
 
   $app->put('/', function() use ($app) {
-    $new_roll_score = $app->request->put('new_roll_score');
+    $new_roll_score = htmlspecialchars($app->request->put('new_roll_score'));
     $roll_scores = $_SESSION['roll_scores'];
     if(is_valid_roll($new_roll_score)){
       array_push($roll_scores, $new_roll_score);
     }else{
-      $app->flash('error','invalid roll');
+      $app->flash('error', $new_roll_score . ' is invalid.  You must input a digit between 0 and 9, or a X, or a /');
     }
 
     $_SESSION['roll_scores'] = $roll_scores;
@@ -40,19 +40,12 @@
     $app->redirect('/');
   });
 
-  function is_valid_roll($roll){
-    $validity = false;
-
-    if($roll == 'X'){
-      $validity = true;
-    }elseif ($roll == '/'){
-      $validity = true;
-    }elseif($roll >= 0 && $roll <= 9){
-      $validity = true;
-    }
-
-    return $validity;
-  }
+function is_valid_roll($roll){
+  if(strlen($roll) > 1){ return false; }
+  $pattern = '/\d|[X|\/]/';
+  if(preg_match($pattern, $roll)){ return true; }
+  return false;
+}
 
   $app->run();
 

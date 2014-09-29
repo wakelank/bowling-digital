@@ -8,10 +8,11 @@
 
     function __construct($num_frames, $new_roll_scores){
 
-      $newest_roll = end($new_roll_scores);
-      if(!$this->is_valid_roll($newest_roll)){
-        echo "Invalid input: '" . $newest_roll . "' .Must be an integer from 0-9, a 'X' or a '/'.";
-        die();
+      foreach($new_roll_scores as $roll){
+        if(!$this->is_valid_roll($roll)){
+          echo "Invalid input: '" . $roll . "' .Must be an integer from 0-9, a 'X' or a '/'.";
+          die();
+        }
       }
 
       $this->build_frames($num_frames, $new_roll_scores);
@@ -125,17 +126,10 @@
     }
 
     function is_valid_roll($roll){
-      $validity = false;
-
-      if($roll == 'X'){
-        $validity = true;
-      }elseif ($roll == '/'){
-        $validity = true;
-      }elseif($roll >= 0 && $roll <= 9){
-        $validity = true;
-      }
-
-      return $validity;
+      if(strlen($roll) > 1){ return false; }
+      $pattern = '/\d|[X|\/]/';
+      if(preg_match($pattern, $roll)){ return true; }
+      return false;
     }
 
     function get_frames(){
