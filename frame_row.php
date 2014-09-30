@@ -142,7 +142,10 @@
 
         array_push($frames, $current_frame);
 
+
+
       }
+      //  echo "roll_index: " . $this->get_current_roll_index() . "<br>";
     }
 
     function is_valid_roll($roll){
@@ -150,6 +153,30 @@
       $pattern = '/\d|[X|\/]/';
       if(preg_match($pattern, $roll)){ return true; }
       return false;
+    }
+
+    function get_current_frame_index(){
+      global $frames;
+
+      foreach($frames as $frame_index=>$frame){
+        foreach($frame['rolls'] as $roll_index=>$roll){
+          if($roll == ''){
+            return $frame_index;
+          }
+        }
+      }
+    }
+
+    function get_current_roll_index(){
+      global $frames;
+
+      foreach($frames as $frame_index=>$frame){
+        foreach($frame['rolls'] as $roll_index=>$roll){
+          if($roll == ''){
+            return $roll_index;
+          }
+        }
+      }
     }
 
     function get_frames(){
