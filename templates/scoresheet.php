@@ -9,7 +9,7 @@
 <body>
   <form action="/delete" method="POST">
     <input type="submit" value="clear scores">
-  </form>Ω
+  </form>
 
   <?php
     require "frame_row.php";
@@ -31,56 +31,45 @@
     $frame_row = new frame_row($num_frames, $roll_scores);
 
     $frames = $frame_row->get_frames();
-
-    $current_frame_index = $frame_row->get_current_frame_index();
     $current_roll_index = $frame_row->get_current_roll_index();
     $is_final_frame = $frame_row->is_final_frame();
     $has_bonus_roll = $frame_row->has_bonus_roll();
+    $game_over = $frame_row->is_game_over();
   ?>
 
   <h1>Bowling Digital</h1>
   <form action="/" method="POST">
     <input type="hidden" name="_METHOD" value="PUT">
     <input type="text" name="new_roll_score" maxlength="1" value="0">
-    <input type='hidden' name='current_frame_index' value='<?php echo $current_frame_index; ?>'>
     <input type='hidden' name='current_roll_index' value='<?php echo $current_roll_index; ?>'>
     <input type='hidden' name='is_final_frame' value='<?php echo $is_final_frame; ?>'>
     <input type='hidden' name='has_bonus_roll' value='<?php echo $has_bonus_roll; ?>'>
 
     <input type="submit">
-
+  </form>
 
   <!-- <form action="/" method="POST">
     <input type="hidden" name"_METHOD" value ="DELETE"> -->
 
-
-
-
 <?php
+  if($game_over){
+    echo "<h2>Game Over</h2>";
+  }
+  echo "<table class='score_table'>";
+  echo "<tr>";
+  foreach($frames as $frame_index => $frame){
 
-    echo "<table class='score_table'>";
+    echo "<td>";
+    echo "<table class='frame_table'>";
     echo "<tr>";
-    foreach($frames as $frame_index => $frame){
-
-      echo "<td>";
-      echo "<table class='frame_table'>";
-      echo "<tr>";
-      foreach($frame['rolls'] as $roll_index => $roll){
-        echo "<td>" . $roll . "</td>";
-      }
-      echo "</tr><tr>";
-      echo "<td colspan=2>" . $frame['frame_score'] . "</td>";
-      echo "</tr></table>";
-      echo "</td>";
+    foreach($frame['rolls'] as $roll_index => $roll){
+      echo "<td>" . $roll . "</td>";
     }
-
-    echo "</tr>";
-    echo "</table>";
-
-
-
-
-
-  ?>
-
-</form>
+    echo "</tr><tr>";
+    echo "<td colspan=2>" . $frame['frame_score'] . "</td>";
+    echo "</tr></table>";
+    echo "</td>";
+  }
+  echo "</tr>";
+  echo "</table>";
+?>

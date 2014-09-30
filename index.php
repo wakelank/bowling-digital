@@ -4,7 +4,6 @@
   $message = '';
 
   require 'vendor/autoload.php';
-//  require 'frame_row.php';
 
   $app = new \Slim\Slim(array(
     'templates.path' => './templates',
@@ -17,8 +16,8 @@
 
   $app->put('/', function() use ($app) {
     global $message;
+
     $new_roll_score = htmlspecialchars($app->request->put('new_roll_score'));
-    // $current_frame_index = $app->request->put('current_frame_index');
     $current_roll_index = $app->request->put('current_roll_index');
     $has_bonus_roll = $app->request->put('has_bonus_roll');
 
@@ -74,7 +73,7 @@ function is_valid_roll($roll, $current_roll_index, $has_bonus_roll, $roll_scores
   }else{
 
     if($current_roll_index == 0 && $roll == '/'){
-      $message = 'Cannot enter a / for the first roll.<br>';
+      $message = 'Cannot enter a / for the first roll of a frame.<br>';
       return false;
     }
 
@@ -84,15 +83,14 @@ function is_valid_roll($roll, $current_roll_index, $has_bonus_roll, $roll_scores
     }
 
     if ($current_roll_index == 1 && $roll == 'X' && !$has_bonus_roll){
-      $message = 'Cannot enter a X for the second roll.<br>';
+      $message = 'Cannot enter a X for the second roll of a frame.<br>';
       return false;
     }
 
     if($current_roll_index != 0 && $roll == 'X' && $has_bonus_roll && $previous_roll_value != 10){
-      $message = "Cannot enter an X unless previous roll was an X or / in the previous roll.<br>";
+      $message = "Cannot enter an X in the final frame unless previous roll was an X or /.<br>";
       return false;
     }
-
   }
 
   return true;

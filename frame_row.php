@@ -4,12 +4,12 @@
 
     var $num_rolls;
     var $frames;
-    var $game_over;
+    var $game_over = false;
 
     function __construct($num_frames, $new_roll_scores){
 
       foreach($new_roll_scores as $roll){
-        if(!$this->is_valid_roll($roll)){
+        if(!$this->is_valid_input($roll)){
           echo "Invalid input: '" . $roll . "' .Must be an integer from 0-9, a 'X' or a '/'.";
           die();
         }
@@ -20,6 +20,7 @@
 
     function build_frames($num_frames, $roll_scores){
       global $frames;
+      global $game_over;
       $roll_score_index = 0;
       $max_rolls_per_frame = 2;
       $frames = array();
@@ -140,14 +141,19 @@
           ++$roll_score_index;
         }
 
-        array_push($frames, $current_frame);
-
+      array_push($frames, $current_frame);
       }
-      //  echo "roll_index: " . $this->get_current_roll_index() . "<br>";
-      echo "is final frame: " . $this->is_final_frame() . "<br>";
+      echo "frame index :" . $this->get_current_frame_index() . " num_frames: " . $num_frames. "<br>";
+      echo "current_roll_index: " . $this->get_current_roll_index() . " max rolls: " .$max_rolls_per_frame . "<br>";
+
+      if (($this->get_current_frame_index()  == $num_frames) && ($this->get_current_roll_index()  == $max_rolls_per_frame)){
+        $this->game_over = true;
+      }
+
     }
 
-    function is_valid_roll($roll){
+
+    function is_valid_input($roll){
       if(strlen($roll) > 1){ return false; }
       $pattern = '/\d|[X|\/]/';
       if(preg_match($pattern, $roll)){ return true; }
@@ -164,6 +170,7 @@
           }
         }
       }
+      return $frame_index + 1;
     }
 
     function get_current_roll_index(){
@@ -176,6 +183,7 @@
           }
         }
       }
+      return $roll_index + 1;
     }
 
     function is_final_frame(){
@@ -211,14 +219,6 @@
       global $frames;
 
       return $frames;
-    }
-
-    function game_over_check($roll_scores){
-      $game_over = false;
-      if (count($roll_scores) == $this->num_rolls){
-        $game_over = true;
-      }
-      return $game_over;
     }
 
     function is_game_over(){
