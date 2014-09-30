@@ -20,13 +20,13 @@
     $new_roll_score = htmlspecialchars($app->request->put('new_roll_score'));
     $current_frame_index = $app->request->put('current_frame_index');
     $current_roll_index = $app->request->put('current_roll_index');
-    // $params = $app->request->params();
-    // $p='';
-    // foreach($params as $key=>$param){
-    //   $p = $p . " | " . $key."=>".$param;
-    // }
-    //
-    // $app->flash('error', 'frame: ' . $current_frame_index . '<br> roll: '. $current_roll_index . '<br> params: '. $p .'<br>');
+    $params = $app->request->params();
+    $p='';
+    foreach($params as $key=>$param){
+      $p = $p . " | " . $key."=>".$param;
+    }
+
+    $app->flash('error', 'frame: ' . $current_frame_index . '<br> roll: '. $current_roll_index . '<br> params: '. $p .'<br>');
 
     $roll_scores = $_SESSION['roll_scores'];
 

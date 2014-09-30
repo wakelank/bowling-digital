@@ -146,6 +146,7 @@
 
       }
       //  echo "roll_index: " . $this->get_current_roll_index() . "<br>";
+      echo "is final frame: " . $this->is_final_frame() . "<br>";
     }
 
     function is_valid_roll($roll){
@@ -177,6 +178,21 @@
           }
         }
       }
+    }
+
+    function is_final_frame(){
+      global $frames;
+
+      $num_frames = count($frames);
+
+      $frame_index = $this->get_current_frame_index();
+
+      if ($frame_index + 1 == $num_frames){
+        return true;
+      }else{
+        return false;
+      }
+
     }
 
     function get_frames(){

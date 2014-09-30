@@ -31,6 +31,7 @@
 
     $current_frame_index = $frame_row->get_current_frame_index();
     $current_roll_index = $frame_row->get_current_roll_index();
+    $is_final_frame = $frame_row->is_final_frame();
   ?>
 
   <h1>Bowling Digital</h1>
@@ -39,6 +40,7 @@
     <input type="text" name="new_roll_score" maxlength="1" value="0">
     <input type='hidden' name='current_frame_index' value='<?php echo $current_frame_index; ?>'>
     <input type='hidden' name='current_roll_index' value='<?php echo $current_roll_index; ?>'>
+    <input type='hidden' name='is_final_frame' value='<?php echo $is_final_frame; ?>'>
     <input type="submit">
   </form>
 
