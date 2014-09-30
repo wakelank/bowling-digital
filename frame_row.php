@@ -102,7 +102,7 @@
             }elseif ($current_roll == '/'){
 
               if($frame_roll_index == 0){
-                echo "cannot input a spare on the first roll of a frame.<br>";
+                echo "Cannot input a spare on the first roll of a frame.<br>";
                 die();
               }
               if($previous_roll == '/' || $previous_roll == 'X'){
@@ -125,6 +125,12 @@
                 }
               }
             }else{
+
+              if ($frame_roll_index != 0 && ($current_roll + $previous_roll) >= 10){
+                echo "Sum of rolls in a single frame cannot be higher than 9.<br>";
+                die();
+              }
+
               $current_frame['rolls'][$frame_roll_index] = $current_roll;
               $current_frame['frame_score'] += $current_roll;
 
@@ -143,8 +149,6 @@
 
       array_push($frames, $current_frame);
       }
-      echo "frame index :" . $this->get_current_frame_index() . " num_frames: " . $num_frames. "<br>";
-      echo "current_roll_index: " . $this->get_current_roll_index() . " max rolls: " .$max_rolls_per_frame . "<br>";
 
       if (($this->get_current_frame_index()  == $num_frames) && ($this->get_current_roll_index()  == $max_rolls_per_frame)){
         $this->game_over = true;

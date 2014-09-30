@@ -91,6 +91,10 @@ function is_valid_roll($roll, $current_roll_index, $has_bonus_roll, $roll_scores
       $message = "Cannot enter an X in the final frame unless previous roll was an X or /.<br>";
       return false;
     }
+    if($current_roll_index != 0 && $previous_roll + $roll >= 10){
+      $message = "Scores in a single frame cannot be greater than 9 (maybe you need to enter a /).<br>";
+      return false;
+    }
   }
 
   return true;

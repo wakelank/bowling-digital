@@ -25,7 +25,7 @@
     }
 
     if(isset($flash['error'])){
-      echo $flash['error'];
+      echo "<p class='error_message'>" . $flash['error'] . "</p>";
     }
 
     $frame_row = new frame_row($num_frames, $roll_scores);
@@ -40,7 +40,7 @@
   <h1>Bowling Digital</h1>
   <form action="/" method="POST">
     <input type="hidden" name="_METHOD" value="PUT">
-    <input type="text" name="new_roll_score" maxlength="1" value="0">
+    <input type="text" name="new_roll_score" maxlength="1">
     <input type='hidden' name='current_roll_index' value='<?php echo $current_roll_index; ?>'>
     <input type='hidden' name='is_final_frame' value='<?php echo $is_final_frame; ?>'>
     <input type='hidden' name='has_bonus_roll' value='<?php echo $has_bonus_roll; ?>'>
@@ -59,16 +59,22 @@
   echo "<tr>";
   foreach($frames as $frame_index => $frame){
 
-    echo "<td>";
+    echo "<td class='frame_table_cell'>";
     echo "<table class='frame_table'>";
     echo "<tr>";
     foreach($frame['rolls'] as $roll_index => $roll){
-      echo "<td>" . $roll . "</td>";
+      echo "<td class='roll_cell'>" . $roll . "</td>";
     }
     echo "</tr><tr>";
-    echo "<td colspan=2>" . $frame['frame_score'] . "</td>";
+    if (count($frames) < $frame_index + 1){
+      echo "<td colspan=2 class='framescore_cell'>" . $frame['frame_score'] . "</td>";
+    }else{
+      echo "<td colspan=3 class='framescore_cell'>" . $frame['frame_score'] . "</td>";
+    }
+
     echo "</tr></table>";
     echo "</td>";
+
   }
   echo "</tr>";
   echo "</table>";
