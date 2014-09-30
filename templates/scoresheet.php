@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="styles/stylesheet.css">
 </head>
 <body>
+  <form action="/delete" method="POST">
+    <input type="submit" value="clear scores">
+  </form>Ω
 
   <?php
     require "frame_row.php";
@@ -32,6 +35,7 @@
     $current_frame_index = $frame_row->get_current_frame_index();
     $current_roll_index = $frame_row->get_current_roll_index();
     $is_final_frame = $frame_row->is_final_frame();
+    $has_bonus_roll = $frame_row->has_bonus_roll();
   ?>
 
   <h1>Bowling Digital</h1>
@@ -41,14 +45,15 @@
     <input type='hidden' name='current_frame_index' value='<?php echo $current_frame_index; ?>'>
     <input type='hidden' name='current_roll_index' value='<?php echo $current_roll_index; ?>'>
     <input type='hidden' name='is_final_frame' value='<?php echo $is_final_frame; ?>'>
+    <input type='hidden' name='has_bonus_roll' value='<?php echo $has_bonus_roll; ?>'>
+
     <input type="submit">
-  </form>
+
 
   <!-- <form action="/" method="POST">
     <input type="hidden" name"_METHOD" value ="DELETE"> -->
 
-  <form action="/delete" method="POST">
-    <input type="submit" value="clear scores">
+
 
 
 <?php

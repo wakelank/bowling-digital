@@ -142,8 +142,6 @@
 
         array_push($frames, $current_frame);
 
-
-
       }
       //  echo "roll_index: " . $this->get_current_roll_index() . "<br>";
       echo "is final frame: " . $this->is_final_frame() . "<br>";
@@ -193,6 +191,20 @@
         return false;
       }
 
+    }
+
+    function has_bonus_roll(){
+      global $frames;
+
+      $frame = end($frames);
+
+      if($this->is_final_frame()){
+        if ($frame['rolls'][0] == 'X' || $frame['rolls'][1] == '/'){
+          return true;
+        }
+      }else{
+        return false;
+      }
     }
 
     function get_frames(){
