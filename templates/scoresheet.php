@@ -5,6 +5,7 @@
     Bowling Digital
   </title>
   <link rel="stylesheet" href="styles/stylesheet.css">
+  <link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
 </head>
 <body>
   <form action="/delete" method="POST">
@@ -38,17 +39,21 @@
   ?>
 
   <h1>Bowling Digital</h1>
+  <p> Enter your score.  A score can be a number between 0 and 9 or an 'X' or a '/' if you're good. </p>
   <form action="/" method="POST">
     <input type="hidden" name="_METHOD" value="PUT">
     <input type="text" name="new_roll_score" maxlength="1">
+    <!-- these hidden inputs are used for data validation in the put route -->
     <input type='hidden' name='current_roll_index' value='<?php echo $current_roll_index; ?>'>
-    <input type='hidden' name='is_final_frame' value='<?php echo $is_final_frame; ?>'>
     <input type='hidden' name='has_bonus_roll' value='<?php echo $has_bonus_roll; ?>'>
 
     <input type="submit">
   </form>
 
-  <!-- <form action="/" method="POST">
+  <!-- I would have liked to use the following form action for the delete button,
+  but I was unable to get the route to work.
+
+  <form action="/" method="POST">
     <input type="hidden" name"_METHOD" value ="DELETE"> -->
 
 <?php

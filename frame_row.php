@@ -2,7 +2,6 @@
 
   class frame_row {
 
-    var $num_rolls;
     var $frames;
     var $game_over = false;
 
@@ -21,10 +20,12 @@
     function build_frames($num_frames, $roll_scores){
       global $frames;
       global $game_over;
+
       $roll_score_index = 0;
       $max_rolls_per_frame = 2;
       $frames = array();
 
+      //cycles through each frame, building the frame as it goes.
       for ($frame_index = 0; $frame_index < $num_frames; ++$frame_index){
         $current_frame = array('rolls' => array(), 'frame_score' => null);
         $previous_frame = isset($frames[$frame_index - 1]) ? $frames[$frame_index - 1] : array('rolls' => array(),'frame_score' => null);
@@ -35,6 +36,7 @@
           $last_frame = false;
         }
 
+        //cycles through the rolls of each frame
         for($frame_roll_index = 0; $frame_roll_index < $max_rolls_per_frame; ++ $frame_roll_index){
 
           $previous_roll = isset($roll_scores[$roll_score_index - 1]) ? $roll_scores[$roll_score_index - 1] : null;
@@ -64,6 +66,7 @@
 
           if (!is_null($current_roll)){
 
+            // a strike
             if ($current_roll == 'X'){
 
               if (!$last_frame && $frame_roll_index != 0){
@@ -99,6 +102,8 @@
                 ++$roll_score_index;
                 break 1;
               }
+
+            // a spare
             }elseif ($current_roll == '/'){
 
               if($frame_roll_index == 0){
@@ -124,6 +129,7 @@
                   $current_frame['frame_score'] = '';
                 }
               }
+            // neither a strike nor a spare
             }else{
 
               if ($frame_roll_index != 0 && ($current_roll + $previous_roll) >= 10){
@@ -139,7 +145,7 @@
               }
             }
           }else{
-
+            //if there aren't enough rolls to fill the required number of frames, the rest of the frames are made empty
             $current_frame['rolls'][$frame_roll_index] = '';
             $current_frame['frame_score'] = '';
           }
@@ -150,6 +156,8 @@
       array_push($frames, $current_frame);
       }
 
+      //if the most recent frame scored equals the number of frames AND the most recent roll equals the number of rolls per frame
+      // (could be three for the final frame) the game is over.
       if (($this->get_current_frame_index()  == $num_frames) && ($this->get_current_roll_index()  == $max_rolls_per_frame)){
         $this->game_over = true;
       }
@@ -164,6 +172,7 @@
       return false;
     }
 
+    //gets the frame about to be scored
     function get_current_frame_index(){
       global $frames;
 
@@ -177,6 +186,7 @@
       return $frame_index + 1;
     }
 
+    //gets the roll about to be scored
     function get_current_roll_index(){
       global $frames;
 
@@ -205,6 +215,7 @@
 
     }
 
+    //returns true if it's the final frame and a spare or strike was rolled
     function has_bonus_roll(){
       global $frames;
 

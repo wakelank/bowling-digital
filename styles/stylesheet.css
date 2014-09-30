@@ -1,7 +1,11 @@
 body {
-  background-color: lightgoldenrodyellow;
-  color:purple;
   font-family: sans-serif;
+}
+h1{
+  font-family: 'Dancing Script', cursive;
+}
+h2{
+  font-family: 'Dancing Script', cursive;
 }
 table {
   border-collapse: collapse;

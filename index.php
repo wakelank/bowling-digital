@@ -21,14 +21,6 @@
     $current_roll_index = $app->request->put('current_roll_index');
     $has_bonus_roll = $app->request->put('has_bonus_roll');
 
-    // $params = $app->request->params();
-    // $p='';
-    // foreach($params as $key=>$param){
-    //   $p = $p . " | " . $key."=>".$param;
-    // }
-
-    // $app->flash('error', 'frame: ' . $current_frame_index . '<br> roll: '. $current_roll_index . '<br> params: '. $p .'<br>');
-
     $roll_scores = $_SESSION['roll_scores'];
 
     if(is_valid_roll($new_roll_score, $current_roll_index, $has_bonus_roll, $roll_scores)){
